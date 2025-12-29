@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>שער הדולר היום + מעקב משלוחים</title>
-  <meta name="description" content="שער הדולר היום (מקור רשמי – בנק ישראל) + כלי מהיר למעקב משלוחים (דואר ישראל וקישורים לחברות נוספות)." />
+  <meta name="description" content="שער הדולר היציג היום מבנק ישראל + מעקב משלוחים + מבזקי חדשות YNET." />
   <meta name="robots" content="index,follow" />
 
   <style>
@@ -15,8 +15,6 @@
       --muted:#4b5563;
       --border:#e5e7eb;
       --blue:#2563eb;
-      --black:#111827;
-      --chip:#f1f5ff;
     }
     body{
       margin:0;
@@ -30,9 +28,9 @@
       margin: 36px auto;
       padding: 0 16px;
     }
-    .header{text-align:center;margin-bottom:14px}
+    .header{text-align:center;margin-bottom:20px}
     h1{margin:0 0 6px;font-size:28px}
-    .subtitle{margin:0;color:var(--muted);font-size:16px}
+    .subtitle{margin:0;color:var(--muted)}
 
     .card{
       background:var(--card);
@@ -43,57 +41,55 @@
       margin-top:14px;
     }
 
-    .ticker{
-      border:1px solid var(--border);
-      border-radius:12px;
-      overflow:hidden;
-      background:#fff;
-    }
-    .ticker-head{
-      padding:10px 12px;
-      border-bottom:1px solid var(--border);
-      font-weight:700;
-      background:#fafafa;
-    }
-    .marquee{
-      white-space:nowrap;
-      overflow:hidden;
-      padding:10px 12px;
-      color:var(--muted);
-    }
-    .marquee span{
-      display:inline-block;
-      padding-left:100%;
-      animation:scroll 22s linear infinite;
-    }
-    @keyframes scroll{
-      from{transform:translateX(0)}
-      to{transform:translateX(-100%)}
-    }
-
-    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px}
     @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
 
-    .title-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-    h2{margin:0;font-size:20px}
-    .pill{background:var(--chip);border:1px solid #dbe7ff;padding:6px 10px;border-radius:999px;font-size:13px}
+    /* דולר */
+    .usd-value{
+      font-size:42px;
+      font-weight:800;
+      color:var(--blue);
+      margin:10px 0;
+    }
+    .usd-meta{color:var(--muted);font-size:14px}
 
-    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    a.btn,button.btn{border-radius:10px;padding:12px 14px;font-weight:700;border:0;text-decoration:none;cursor:pointer}
-    .btn-blue{background:var(--blue);color:#fff}
-    .btn-black{background:var(--black);color:#fff}
-    .btn-light{background:#eef2ff;color:#111}
+    /* YNET */
+    .ynet-box{
+      font-size:18px;
+      min-height:40px;
+    }
+    .ynet-box a{
+      color:#0b3aa4;
+      font-weight:700;
+      text-decoration:none;
+    }
+    .ynet-box a:hover{text-decoration:underline}
 
-    .form-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    input[type=text]{flex:1;padding:12px;border-radius:10px;border:1px solid var(--border)}
+    /* טופס */
+    .form-row{display:flex;gap:10px;flex-wrap:wrap}
+    input[type=text]{
+      flex:1;
+      padding:12px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      font-size:16px;
+    }
+    button{
+      padding:12px 16px;
+      border-radius:10px;
+      border:0;
+      background:#111827;
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
 
-    .links{display:grid;grid-template-columns:1fr;gap:10px}
-    @media(min-width:700px){.links{grid-template-columns:1fr 1fr}}
-    .linkbox{border:1px solid var(--border);border-radius:12px;padding:12px}
-
-    footer{text-align:center;color:var(--muted);font-size:13px;margin:18px 0}
-    .ynet a{color:#0b3aa4;font-weight:700;text-decoration:none}
-    .ynet a:hover{text-decoration:underline}
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      margin:22px 0;
+    }
   </style>
 </head>
 
@@ -102,81 +98,81 @@
 
   <div class="header">
     <h1>שער הדולר היום + מעקב משלוחים</h1>
-    <p class="subtitle">דולר • חבילות • חדשות בזמן אמת</p>
+    <p class="subtitle">מידע רשמי, חדשות קצרות וכלי שימושי אחד</p>
   </div>
 
-  <!-- YNET TOP -->
-  <div class="card ticker ynet">
-    <div class="ticker-head">🟦 מבזקי YNET (טעינה בכניסה)</div>
-    <div class="marquee"><span id="ynetTop">טוען מבזקים…</span></div>
-  </div>
+  <!-- YNET -->
+  <section class="card">
+    <strong>📰 מבזקי YNET</strong>
+    <div id="ynetBox" class="ynet-box">טוען כותרות…</div>
+  </section>
 
   <div class="grid">
 
+    <!-- דולר -->
     <section class="card">
-      <div class="title-row">
-        <h2>💱 שער הדולר היום</h2>
-        <div class="pill">בנק ישראל</div>
-      </div>
-      <div class="btns">
-        <a class="btn btn-blue" target="_blank" href="https://www.boi.org.il/roles/markets/exchangerates/usdollar/">שער הדולר</a>
-        <a class="btn btn-light" target="_blank" href="https://www.boi.org.il/roles/markets/exchangerates/">כל השערים</a>
-      </div>
+      <strong>💵 שער דולר יציג</strong>
+      <div id="usdValue" class="usd-value">—</div>
+      <div id="usdMeta" class="usd-meta"></div>
     </section>
 
+    <!-- מעקב -->
     <section class="card">
-      <div class="title-row">
-        <h2>📦 מעקב משלוחים</h2>
-        <div class="pill">דואר ישראל</div>
-      </div>
+      <strong>📦 מעקב משלוחים</strong>
       <form id="trackForm" class="form-row">
         <input id="trackingNumber" type="text" placeholder="מספר משלוח">
-        <button class="btn btn-black">מעקב</button>
+        <button>מעקב</button>
       </form>
     </section>
 
   </div>
 
-  <section class="card">
-    <h2>🔗 קישורי מעקב</h2>
-    <div class="links">
-      <div class="linkbox"><a target="_blank" href="https://www.17track.net/en">17TRACK</a></div>
-      <div class="linkbox"><a target="_blank" href="https://www.ups.com/track">UPS</a></div>
-      <div class="linkbox"><a target="_blank" href="https://www.dhl.com/global-en/home/tracking.html">DHL</a></div>
-      <div class="linkbox"><a target="_blank" href="https://www.fedex.com/en-il/tracking.html">FedEx</a></div>
-    </div>
-  </section>
-
-  <!-- YNET BOTTOM -->
-  <div class="card ticker ynet">
-    <div class="ticker-head">🟩 מבזקי YNET (רענון כל 5 דקות)</div>
-    <div class="marquee"><span id="ynetBottom">טוען מבזקים…</span></div>
-  </div>
-
-  <footer>נבנה בצורה נקייה ומודולרית</footer>
+  <footer>
+    נתונים ממקורות רשמיים • נטען אוטומטית
+  </footer>
 </div>
 
 <script>
-const FEED = "/.netlify/functions/ynet?limit=8";
-const REFRESH = 5 * 60 * 1000;
+/* ===== YNET ===== */
+const YNET_URL = "/.netlify/functions/ynet?limit=10";
+let ynetItems = [];
+let ynetIndex = 0;
 
-async function loadYnet(id){
-  const res = await fetch(FEED);
+async function loadYnet(){
+  const res = await fetch(YNET_URL);
   const data = await res.json();
-  document.getElementById(id).innerHTML =
-    data.items.map(i=>`<a href="${i.link}" target="_blank">${i.title}</a>`).join(" • ");
+  ynetItems = data.items || [];
+  showNextYnet();
 }
+function showNextYnet(){
+  if(!ynetItems.length) return;
+  const item = ynetItems[ynetIndex % ynetItems.length];
+  document.getElementById("ynetBox").innerHTML =
+    `<a href="${item.link}" target="_blank">${item.title}</a>`;
+  ynetIndex++;
+}
+setTimeout(loadYnet, 1500);
+setInterval(showNextYnet, 7000);
 
-loadYnet("ynetTop");
-loadYnet("ynetBottom");
-setInterval(()=>loadYnet("ynetBottom"), REFRESH);
+/* ===== USD ===== */
+async function loadUsd(){
+  const res = await fetch("/.netlify/functions/usd");
+  const data = await res.json();
+  document.getElementById("usdValue").textContent = data.rate + " ₪";
+  document.getElementById("usdMeta").textContent =
+    "עודכן: " + data.date + " • " + data.time;
+}
+loadUsd();
 
-// tracking
+/* ===== Tracking ===== */
 document.getElementById("trackForm").addEventListener("submit", e=>{
   e.preventDefault();
   const v=document.getElementById("trackingNumber").value.trim();
-  if(v) window.open("https://israelpost.co.il/en/itemtrace?itemcode="+encodeURIComponent(v));
+  if(v){
+    window.open("https://israelpost.co.il/en/itemtrace?itemcode="+encodeURIComponent(v));
+  }
 });
 </script>
+
 </body>
 </html>
