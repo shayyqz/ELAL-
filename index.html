@@ -143,6 +143,30 @@ document.getElementById('trackForm').addEventListener('submit',e=>{
  if(v)window.open('https://israelpost.co.il/en/itemtrace?itemcode='+encodeURIComponent(v));
 });
 </script>
+<footer>
+ <!-- YNET תחתון -->
+<div class="card">
+  <div class="title-row">
+    <h2>📰 מבזקי YNET – עדכונים אחרונים</h2>
+  </div>
+  <div id="ynetBottomBox" class="ynet-box">טוען מבזקים…</div>
+</div>
+</footer>
+ <script>
+  /* === YNET תחתון – רענון כל 5 דקות === */
+async function loadYnetBottom(){
+  const r = await fetch('/.netlify/functions/ynet?limit=8');
+  const d = await r.json();
+  document.getElementById('ynetBottomBox').innerHTML =
+    d.items.map(i =>
+      `<div>• <a href="${i.link}" target="_blank">${i.title}</a></div>`
+    ).join('');
+}
+
+loadYnetBottom();
+setInterval(loadYnetBottom, 5 * 60 * 1000);
+ <script>
 
 </body>
 </html>
+
